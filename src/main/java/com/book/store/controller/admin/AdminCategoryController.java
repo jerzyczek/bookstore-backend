@@ -1,6 +1,7 @@
 package com.book.store.controller.admin;
 
 import com.book.store.controller.model.CategoryRequest;
+import com.book.store.controller.model.CategoryUpdateRequest;
 import com.book.store.dto.CategoryDto;
 import com.book.store.dto.Converter;
 import com.book.store.model.Category;
@@ -38,8 +39,14 @@ public class AdminCategoryController {
     }
 
     @PutMapping("/category")
-    public ResponseEntity<CategoryDto> editCategory(@RequestBody @Valid CategoryRequest categoryRequest) {
+    public ResponseEntity<CategoryDto> editCategory(@RequestBody @Valid CategoryUpdateRequest categoryRequest) {
         Category category = this.categoryService.edit(categoryRequest);
+        return new ResponseEntity<>(Converter.categoryToCategoryDto(category), HttpStatus.OK);
+    }
+
+    @GetMapping("/category")
+    public ResponseEntity<CategoryDto> getCategory(@RequestParam String categoryName) {
+        Category category = this.categoryService.getCategory(categoryName);
         return new ResponseEntity<>(Converter.categoryToCategoryDto(category), HttpStatus.OK);
     }
 

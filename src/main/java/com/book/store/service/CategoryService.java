@@ -1,6 +1,7 @@
 package com.book.store.service;
 
 import com.book.store.controller.model.CategoryRequest;
+import com.book.store.controller.model.CategoryUpdateRequest;
 import com.book.store.exception.CategoryException;
 import com.book.store.exception.ProductException;
 import com.book.store.model.Category;
@@ -30,6 +31,16 @@ public class CategoryService {
         this.productRepository = productRepository;
     }
 
+    public Category getCategory(final String categoryName) {
+        Optional<Category> category = this.categoryRepository.findByName(categoryName);
+
+        if (!category.isPresent()) {
+            throw new CategoryException("Cant find category by name");
+        }
+
+        return category.get();
+    }
+
     public Category save(CategoryRequest categoryRequest) {
         AbstractCategoryFactory abstractCategoryFactory = new CategoryFactory();
 
@@ -40,8 +51,8 @@ public class CategoryService {
         return this.categoryRepository.findAll();
     }
 
-    public Category edit(CategoryRequest categoryRequest) {
-        String categoryName = Optional.ofNullable(categoryRequest.getName()).orElse(null);
+    public Category edit(CategoryUpdateRequest categoryRequest) {
+        String categoryName = Optional.ofNullable(categoryRequest.getOldName()).orElse(null);
 
         if (categoryName == null) {
             throw new CategoryException("Can't find category");
@@ -55,7 +66,7 @@ public class CategoryService {
 
         Category categoryToSave = category.get();
 
-        categoryToSave.setName(categoryRequest.getName());
+        categoryToSave.setName(categoryRequest.getNewName());
 
         return this.categoryRepository.save(categoryToSave);
     }

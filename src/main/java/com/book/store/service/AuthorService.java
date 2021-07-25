@@ -24,7 +24,6 @@ public class AuthorService {
 
     public Author saveAuthor(AuthorRequest authorRequest) {
         AbstractAuthorFactory authorFactory = new AuthorFactory();
-
         return this.authorRepository.save(authorFactory.createAuthor(authorRequest));
     }
 
