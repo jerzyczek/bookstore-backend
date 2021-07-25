@@ -1,0 +1,28 @@
+spring:
+  profiles:
+    active: dev
+
+  server:
+    port: 8081
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+      globally_quoted_identifiers: true
+      dialect: org.hibernate.dialect.MySQL8Dialect
+      use-new-id-generator-mappings: true
+      storage_engine: innodb
+    show-sql: true
+  datasource:
+    url: jdbc:mysql://localhost:3306/bookstore?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    username: root
+    password: dupajasiu123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+logging:
+  level:
+    org:
+      springframework:
+        security: debug
+
